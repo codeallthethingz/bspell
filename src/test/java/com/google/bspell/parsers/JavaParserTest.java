@@ -55,7 +55,8 @@ public class JavaParserTest extends Assert {
     public void testParseLine() throws Exception {
         List<Word> words = new ArrayList<Word>();
         parser.parse(1, "int i = 0; static final float MY_FIRST_STATIC_FLOAT = 1F; class HelloWorld", words);
-        assertEquals(5, words.size());
+
+        assertEquals(3, words.size());
         assertTrue(words.get(0).equals("FIRST"));
     }
 }
