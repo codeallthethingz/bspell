@@ -1,0 +1,21 @@
+<project name="bspell" default="clean" basedir="." xmlns:fant="antlib:com.google.ant.extensions">
+
+  <property name="fant.etc.dir" value="${ant.home}/etc/fant"/>
+
+  <import file="${fant.etc.dir}/ant-inc/project.xml"/>
+
+    <property name="project.group.id" value="com.google.bspell"/>
+    <property name="project.artifact.id" value="bspell"/>
+    <property name="project.version" value="0.1"/>
+
+    <fant:dependencies id="project.dependencies">
+      <dependency groupid="suggester" artifactid="suggester" version="1.0.0"/>
+    </fant:dependencies>
+
+    <target name="bspell">
+        <antcall target="java.run">
+            <param name="class.name" value="com.google.bspell.Main"/>
+        </antcall>
+    </target>
+
+</project>
