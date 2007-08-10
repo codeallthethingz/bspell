@@ -41,10 +41,14 @@ public class JavaParserTest extends Assert {
 
     @Test
     public void testParseFile() throws Exception {
+        File excludes = new File(getClass().getResource("resources/test.reserved").toURI());
+        ParserFactory.getInstance().initExcludes(excludes.toString());
+        Parser p = ParserFactory.getInstance().getParser("java");
+
         File file = new File(getClass().getResource("resources/test.java.txt").toURI());
-        List<Word> words = parser.parse(file);
+        List<Word> words = p.parse(file);
         assertTrue(words.get(0).equals("com"));
-        assertEquals(words.size(), 51);
+        assertEquals(words.size(), 52);
     }
 
     @Test
