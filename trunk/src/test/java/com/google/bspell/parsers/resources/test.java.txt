@@ -1,0 +1,57 @@
+package com.google.bspell;
+
+import java.io.*;
+import java.util.*;
+
+import com.softcorporation.util.Logger;
+import com.softcorporation.suggester.util.Constants;
+import com.softcorporation.suggester.util.SpellCheckConfiguration;
+import com.softcorporation.suggester.Suggestion;
+import com.softcorporation.suggester.tools.SpellCheck;
+import com.softcorporation.suggester.dictionary.BasicDictionary;
+import com.softcorporation.suggester.BasicSuggester;
+import com.softcorporation.suggester.util.BasicSuggesterConfiguration;
+
+public class Main {
+    public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+
+        BasicDictionary dictionary = new BasicDictionary("file://c:/src/java/google/bspell/etc/english.jar");
+        //BasicSuggesterConfiguration configuration = new  BasicSuggesterConfiguration("file://c:/src/java/google/bspell/etc/spellCheck.config");
+        SpellCheckConfiguration configuration = new SpellCheckConfiguration("file://c:/src/java/google/bspell/etc/spellCheck.config");
+        BasicSuggester suggester = new BasicSuggester(configuration);
+        suggester.attach(dictionary);
+
+        ArrayList suggestions = null;
+
+        SpellCheck spellCheck = new SpellCheck(configuration);
+        spellCheck.setSuggester(suggester);
+        spellCheck.setSuggestionLimit(5);
+
+        System.out.println("## " + (System.currentTimeMillis() - start));
+
+        String word = "java.util.File private List<Word>";
+
+        spellCheck.setText(word, Constants.DOC_TYPE_TEXT, "en");
+        spellCheck.check();
+
+        while (spellCheck.hasMisspelt())  {
+            String misspeltWord = spellCheck.getMisspelt();
+            String misspeltText = spellCheck.getMisspeltText(5, "<b>", "</b>", 5);
+            System.out.println("Misspelt text: " + misspeltText);
+            System.out.println("Misspelt word: " + misspeltWord);
+            
+            suggestions = spellCheck.getSuggestions();
+            
+            System.out.println("Suggestions: ");
+            for (int j = 0; j < suggestions.size(); j++) {
+                Suggestion suggestion = (Suggestion) suggestions.get(j);
+                System.out.println(j + ": " + suggestion.getWord());
+            }
+
+            spellCheck.checkNext();
+        }
+
+        System.out.println("## " + (System.currentTimeMillis() - start));
+    }
+}
