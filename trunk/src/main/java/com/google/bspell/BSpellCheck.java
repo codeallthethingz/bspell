@@ -33,10 +33,8 @@ public class BSpellCheck {
         if (config == null) {
             System.out.println("Warning: No configration is specified.");
         }
-        long start = System.currentTimeMillis();
 
         BasicDictionary dictionary = new BasicDictionary("file://" + config.getDictionary());
-        //BasicSuggesterConfiguration configuration = new  BasicSuggesterConfiguration("file://c:/src/java/google/bspell/etc/spellCheck.config");
         SpellCheckConfiguration configuration = new SpellCheckConfiguration("file://" + config.getSpellCheckConfig());
         BasicSuggester suggester = new BasicSuggester(configuration);
         suggester.attach(dictionary);
@@ -68,7 +66,6 @@ public class BSpellCheck {
                 spellCheck.checkNext();
             }
         }
-        System.out.println("## " + (System.currentTimeMillis() - start));
-        return failed;
+         return failed;
      }
 }
