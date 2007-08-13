@@ -72,14 +72,16 @@ public class BSpellTask extends Task {
         }
 
         BSpellCheck checker = new BSpellCheck();
-        checker.setConfiguration(this.config);
+        checker.init(this.config);
 
         Map<File, List<Word>> failures = new HashMap<File, List<Word>>();
 
         try {
             for (File source : sources) {
                 List<Word> failed = checker.check(source);
-                failures.put(source, failed);
+                if (!failed.isEmpty()) {
+                    failures.put(source, failed);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
