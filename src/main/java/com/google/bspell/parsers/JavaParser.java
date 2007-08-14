@@ -20,7 +20,7 @@ public class JavaParser extends AbstractParser {
     public static final Set<String> EXCLUDES = new HashSet<String>(Arrays.asList(
          "println", "util", "args", "argv", "main", "millis",
          "get", "set", "io", "out", "src", "jaxb", "jaxws", "wsdl4j", "xmlns", "pom"
-     ));
+                                                                                 ));
     
     public boolean isJavaKeyword(final String keyword) {
         return KEYWORDS.contains(keyword); 

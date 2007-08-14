@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Word {
-
     List<String> suggestions = new ArrayList<String>();
     List<Location> locations = new ArrayList<Location>();
+    private StringBuffer value = new StringBuffer();
 
     public List<Location> getLocations() {
         return locations;
@@ -16,7 +16,7 @@ public final class Word {
         return suggestions;
     }
 
-    private StringBuffer value = new StringBuffer();
+
 
     public StringBuffer getValue() {
         return value;

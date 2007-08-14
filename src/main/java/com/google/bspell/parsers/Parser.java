@@ -10,5 +10,5 @@ import com.google.bspell.model.Word;
 
 public interface Parser {
     List<Word> parse(final File file) throws FileNotFoundException, IOException;
-    public Set<String> getUserExcludes();
+    Set<String> getUserExcludes();
 }
