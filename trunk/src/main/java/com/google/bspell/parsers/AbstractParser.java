@@ -19,7 +19,7 @@ public abstract class AbstractParser implements Parser {
     public static final char[] LOWER_CASE = new char[] {'a', 'z'};
     public static final char[] UPPER_CASE = new char[] {'A', 'Z'};
     
-    public Set<String> userExcludes = new HashSet<String>();
+    private Set<String> userExcludes = new HashSet<String>();
 
     public Set<String> getUserExcludes() {
         return userExcludes;

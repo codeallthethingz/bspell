@@ -9,18 +9,16 @@ import java.util.StringTokenizer;
 
 import com.google.bspell.model.Configuration;
 import com.google.bspell.model.Word;
-import com.google.bspell.utils.StringUtils;
 import com.google.bspell.parsers.Parser;
 import com.google.bspell.parsers.ParserFactory;
+import com.google.bspell.utils.StringUtils;
 
 import com.softcorporation.suggester.BasicSuggester;
 import com.softcorporation.suggester.Suggestion;
 import com.softcorporation.suggester.dictionary.BasicDictionary;
 import com.softcorporation.suggester.tools.SpellCheck;
-import com.softcorporation.suggester.util.BasicSuggesterConfiguration;
 import com.softcorporation.suggester.util.Constants;
 import com.softcorporation.suggester.util.SpellCheckConfiguration;
-import com.softcorporation.util.Logger;
 
 public class BSpellCheck {
     private Configuration config;
@@ -56,7 +54,7 @@ public class BSpellCheck {
             spellCheck.setText(word.getValue().toString(), Constants.DOC_TYPE_TEXT, "en");
             spellCheck.check();
 
-            ArrayList suggestions = null;
+            List suggestions = null;
 
             while (spellCheck.hasMisspelt())  {
                 suggestions = spellCheck.getSuggestions();
@@ -77,10 +75,10 @@ public class BSpellCheck {
                 failed.add(word);
             }
         }
-         return failed;
-     }
+        return failed;
+    }
 
-    public String getCombinedWithValidWords(ArrayList suggestions, String misspeltWord) {
+    public String getCombinedWithValidWords(List suggestions, String misspeltWord) {
         for (int j = 0; j < suggestions.size(); j++) {
             Suggestion suggestion = (Suggestion) suggestions.get(j);
             String word = suggestion.getWord();

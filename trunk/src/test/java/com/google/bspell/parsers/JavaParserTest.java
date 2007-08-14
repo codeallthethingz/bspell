@@ -48,7 +48,7 @@ public class JavaParserTest extends Assert {
         File file = new File(getClass().getResource("resources/test.java.txt").toURI());
         List<Word> words = p.parse(file);
         assertTrue(words.get(0).equals("com"));
-        assertEquals(words.size(), 52);
+        assertEquals(51, words.size());
     }
 
     @Test

@@ -11,11 +11,11 @@ import com.google.bspell.model.Configuration;
 import com.google.bspell.utils.PropertiesUtils;
 import com.google.bspell.utils.StringUtils;
 
-public class ParserFactory {
-    private static ParserFactory INSTANCE;
+public final class ParserFactory {
+    private static ParserFactory instance;
     private final Configuration config;
 
-    Map<String, Parser> registry = new HashMap<String, Parser>();
+    private Map<String, Parser> registry = new HashMap<String, Parser>();
 
     private ParserFactory(Configuration c) {
         this.config = c;
@@ -56,8 +56,8 @@ public class ParserFactory {
         }
     }
 
-    protected void initRegistry(final String registry) throws Exception {
-        Properties properties = PropertiesUtils.loadProperties(registry);
+    protected void initRegistry(final String r) throws Exception {
+        Properties properties = PropertiesUtils.loadProperties(r);
         Enumeration<?> extensions = properties.propertyNames();
         while (extensions.hasMoreElements()) {
             String extension  = (String) extensions.nextElement();
@@ -70,10 +70,10 @@ public class ParserFactory {
     }
 
     public static ParserFactory getInstance(Configuration c) {
-        if (INSTANCE == null) {
-            INSTANCE = new ParserFactory(c);
+        if (instance == null) {
+            instance = new ParserFactory(c);
         }
-        return INSTANCE;
+        return instance;
     }
 
     public Map<String, Parser> getRegistry() {

@@ -2,7 +2,6 @@ package com.google.bspell.ant;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +19,10 @@ import org.apache.tools.ant.types.ResourceCollection;
 
 public class BSpellTask extends Task {
 
-    private Configuration config;
-
     protected Vector rcs = new Vector();
     protected boolean failonerror = true;
+
+    private Configuration config;
 
     public void addConfiguration(Configuration c) {
         this.config = c;
@@ -33,6 +32,7 @@ public class BSpellTask extends Task {
         add(set);
     }
 
+    @SuppressWarnings("unchecked")
     public void add(ResourceCollection res) {
         rcs.add(res);
     }
