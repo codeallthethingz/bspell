@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import com.google.bspell.model.Configuration;
+import com.google.bspell.model.SpellConfiguration;
 import com.google.bspell.model.Word;
 import com.google.bspell.parsers.Parser;
 import com.google.bspell.parsers.ParserFactory;
@@ -21,13 +21,13 @@ import com.softcorporation.suggester.util.Constants;
 import com.softcorporation.suggester.util.SpellCheckConfiguration;
 
 public class BSpellCheck {
-    private Configuration config;
+    private SpellConfiguration config;
     private SpellCheck spellCheck;
 
     public BSpellCheck() {
     }
 
-    public void init(final Configuration c) {
+    public void init(final SpellConfiguration c) {
         this.config = c;
 
         BasicDictionary dictionary = new BasicDictionary("file://" + config.getDictionary());

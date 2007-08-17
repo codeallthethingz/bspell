@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import com.google.bspell.BSpellCheck;
-import com.google.bspell.model.Configuration;
+import com.google.bspell.model.SpellConfiguration;
 import com.google.bspell.model.Word;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -22,9 +22,9 @@ public class BSpellTask extends Task {
     protected Vector rcs = new Vector();
     protected boolean failonerror = true;
 
-    private Configuration config;
+    private SpellConfiguration config;
 
-    public void addConfiguration(Configuration c) {
+    public void addSpellConfiguration(SpellConfiguration c) {
         this.config = c;
     }
 

@@ -1,4 +1,4 @@
-<project name="bspell" default="clean" basedir="." xmlns:fant="antlib:com.google.ant.extensions">
+<project name="bspell" default="all" basedir="." xmlns:fant="antlib:com.google.ant.extensions">
 
   <property name="fant.etc.dir" value="${ant.home}/etc/fant"/>
 
@@ -12,24 +12,9 @@
       <dependency groupid="suggester" artifactid="suggester" version="1.0.0"/>
     </fant:dependencies>
 
-
-    <target name="spell.check">
-      <taskdef name="bspell" classname="com.google.bspell.ant.BSpellTask" classpathref="classpath"/>
-      <bspell>
-	<configuration spellCheckConfig="${fant.etc.dir}/bspell/spellCheck.config"
-		       format="console"
-		       dictionary="${fant.etc.dir}/bspell/english.jar"
-		       reservedDict="${fant.etc.dir}/bspell/reserved.dict"
-		       registry="${fant.etc.dir}/bspell/registry.txt"/>
-	<fileset dir="${src.main.java.dir}" includes="**/*.java **/*.properties"/>
-	<fileset dir="${src.main.resources.dir}" includes="**/*.xml"/>
-      </bspell>
+    <target name="deploy">
+      <fant:install destdir="${ant.home}/lib"/>
     </target>
 
-    <target name="bspell">
-        <antcall target="java.run">
-            <param name="class.name" value="com.google.bspell.Main"/>
-        </antcall>
-    </target>
-
+    <target name="all" depends="clean,test,install,deploy"/>
 </project>

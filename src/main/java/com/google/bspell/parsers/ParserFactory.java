@@ -7,17 +7,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.google.bspell.model.Configuration;
+import com.google.bspell.model.SpellConfiguration;
 import com.google.bspell.utils.PropertiesUtils;
 import com.google.bspell.utils.StringUtils;
 
 public final class ParserFactory {
     private static ParserFactory instance;
-    private final Configuration config;
+    private final SpellConfiguration config;
 
     private Map<String, Parser> registry = new HashMap<String, Parser>();
+    private Map<String, List<String>> excludesMap = new HashMap<String, List<String>>();
 
-    private ParserFactory(Configuration c) {
+    private ParserFactory(SpellConfiguration c) {
         this.config = c;
         initRegistry();
     }
@@ -28,8 +29,8 @@ public final class ParserFactory {
         }
 
         try {
-            initRegistry(config.getRegistry());
             initExcludes(config.getReservedDict());
+            initRegistry(config.getRegistry());
         } catch (Exception e) {
             System.err.println("Warning: Initialization failed.");
         }
@@ -37,22 +38,11 @@ public final class ParserFactory {
 
     protected void initExcludes(final String reservedDict) throws Exception {
         Properties properties = PropertiesUtils.loadProperties(reservedDict);
-        List<String> generalExcludes = StringUtils.tokenize(properties.getProperty("general"));
 
         Enumeration<?> extensions = properties.propertyNames();
         while (extensions.hasMoreElements()) {
             String extension  = (String) extensions.nextElement();
-            if ("general".equals(extension)) {
-                continue;
-            }
-            Parser parser = getParser(extension);
-            if (parser == null) {
-                System.err.println("Warning: Can not find the " + extension 
-                                   + " parser, drop excludes " + properties.getProperty(extension));
-                continue;
-            }
-            parser.getUserExcludes().addAll(StringUtils.tokenize(properties.getProperty(extension)));
-            parser.getUserExcludes().addAll(generalExcludes);
+            excludesMap.put(extension, StringUtils.tokenize(properties.getProperty(extension)));
         }
     }
 
@@ -69,7 +59,7 @@ public final class ParserFactory {
         return getInstance(null);
     }
 
-    public static ParserFactory getInstance(Configuration c) {
+    public static ParserFactory getInstance(SpellConfiguration c) {
         if (instance == null) {
             instance = new ParserFactory(c);
         }
@@ -96,6 +86,10 @@ public final class ParserFactory {
     public Parser newParser(final String extension, final String fullClassName) {
         try {        
             Parser parser = (Parser) Class.forName(fullClassName).newInstance();
+            if (excludesMap.get(extension) != null) {
+                parser.getUserExcludes().addAll(excludesMap.get(extension));
+            }
+            parser.getUserExcludes().addAll(excludesMap.get("general"));
             registry.put(extension, parser);
             return parser;
         } catch (Exception e) {

@@ -1,6 +1,6 @@
 package com.google.bspell.model;
 
-public class Configuration {
+public class SpellConfiguration {
 
     /**
      * Describe dictionary here.
