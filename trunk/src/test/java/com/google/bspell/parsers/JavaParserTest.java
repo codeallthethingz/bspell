@@ -1,13 +1,12 @@
 package com.google.bspell.parsers;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.bspell.model.Word;
-
 import org.junit.Assert;
 import org.junit.Test;
-import java.util.ArrayList;
 
 public class JavaParserTest extends Assert {
     JavaParser parser = new JavaParser();
