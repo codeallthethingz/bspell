@@ -1,7 +1,6 @@
 package com.google.bspell.parsers;
 
 import java.io.File;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -41,4 +40,4 @@ public class ParserFactoryTest extends Assert {
         assertTrue(excludes.contains("wiki"));
         assertTrue(excludes.contains("jaxws"));
     }
- }
+}
